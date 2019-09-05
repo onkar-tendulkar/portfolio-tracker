@@ -37,10 +37,10 @@ public class SecurityController {
     }
 
     @RequestMapping(value = "/api/security", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, method = RequestMethod.POST)
-    public String addSecurity(@RequestBody Security security)
+    public @ResponseBody Security addSecurity(@RequestBody Security security)
     {
         logger.info("Adding Security : "+security.getName()+", Symbol : "+security.getSymbol());
         repo.saveAndFlush(security);
-        return "index";
+        return security;
     }
 }
