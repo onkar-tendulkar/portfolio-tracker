@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="utf-8"></meta>
+    <meta http-equiv="Content-Type" content="text/html"></meta>
+    <title>Spring Boot Security</title>
+    <link rel="stylesheet" type="text/css" media="all" href="css/bootstrap.min.css"></link>
+    <link rel="stylesheet" type="text/css" media="all" href="css/bootstrap-glyphicons.css">
+    </link>
+    <link rel="stylesheet" type="text/css" media="all" href="css/styles.css"></link>
+</head>
+<body>
+<div class="container">
+    <h1>Securities</h1>
+    <ul class="timeline">
+        <div th:each="entry,status : ${security}" >
+            <li th:attr="class=${status.odd}?'timeline-inverted':''" >
+                <div class="tl-circ"></div>
+                <div class="timeline-panel">
+                    <div class="tl-heading">
+                        <h4> <span th:text="${entry.name}">NAME</span> </h4>
+                    </div>
+                    <div class="tl-body">
+                        <p> <span th:text="${entry.symbol}">SYMBOL</span> </p>
+                    </div>
+                </div>
+            </li>
+        </div>
+    </ul>
+</div>
+</body>
+</html>
