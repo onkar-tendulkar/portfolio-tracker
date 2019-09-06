@@ -19,5 +19,6 @@ CREATE TABLE portfolio_security (
    symbol varchar(10) NOT NULL,
    units INT NOT NULL,
    cost_per_unit FLOAT,
+   date_purchased DATE,
    created_time timestamp NULL DEFAULT CURRENT_TIMESTAMP
 );

@@ -1,17 +1,18 @@
 package com.onkar.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 public class Portfolio {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
-    private String userId;
+    private Integer userId;
     private String name;
+
+    @Column(name = "created_time", insertable=false)
+    private Timestamp createdTime;
 
 
     Portfolio(){}
@@ -30,6 +31,13 @@ public class Portfolio {
         this.name = name;
     }
 
-    public String getUserId() { return userId;  }
-    public void setUserId(String userId) {  this.userId = userId; }
+    public Integer getUserId() { return userId;  }
+    public void setUserId(Integer userId) {  this.userId = userId; }
+
+    public Timestamp getCreatedTime() {
+        return createdTime;
+    }
+    public void setCreatedTime(Timestamp createdTime) {
+        this.createdTime = createdTime;
+    }
 }
