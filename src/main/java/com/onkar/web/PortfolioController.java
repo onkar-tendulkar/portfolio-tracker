@@ -24,10 +24,9 @@ public class PortfolioController {
 
 
     @RequestMapping(value="/api/portfolio", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-    public @ResponseBody List<Portfolio> getPortfolio(){
+    public @ResponseBody List<Portfolio> getPortfolio(@RequestParam("userId")Integer userId){
         
-        return repo.findAll();
-
+        return repo.findPortfolioByUserId(userId);
     }
 
     @RequestMapping(value = "/api/portfolio", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, method = RequestMethod.POST)
