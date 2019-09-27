@@ -25,7 +25,7 @@ public class PortfolioController {
 
     @RequestMapping(value="/api/portfolio", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
     public @ResponseBody List<Portfolio> getPortfolio(@RequestParam("userId")Integer userId){
-        
+        logger.info("Fetching Portfolios for userId : "+userId);
         return repo.findPortfolioByUserId(userId);
     }
 
