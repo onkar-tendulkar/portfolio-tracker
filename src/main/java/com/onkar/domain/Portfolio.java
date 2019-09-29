@@ -1,7 +1,10 @@
 package com.onkar.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 public class Portfolio {
@@ -13,6 +16,10 @@ public class Portfolio {
 
     @Column(name = "created_time", insertable=false)
     private Timestamp createdTime;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "portfolio", fetch = FetchType.LAZY)
+    private List<PortfolioSecurity> securities;
 
 
     Portfolio(){}
@@ -39,5 +46,13 @@ public class Portfolio {
     }
     public void setCreatedTime(Timestamp createdTime) {
         this.createdTime = createdTime;
+    }
+
+    public List<PortfolioSecurity> getSecurities() {
+        return securities;
+    }
+
+    public void setSecurities(List<PortfolioSecurity> securities) {
+        this.securities = securities;
     }
 }

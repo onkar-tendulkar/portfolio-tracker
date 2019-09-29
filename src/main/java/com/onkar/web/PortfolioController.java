@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,18 +22,29 @@ public class PortfolioController {
     PortfolioRepository repo;
 
 
+    /*Portfolio list*/
     @RequestMapping(value="/api/portfolio", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-    public @ResponseBody List<Portfolio> getPortfolio(@RequestParam("userId")Integer userId){
+    public @ResponseBody List<Portfolio> getPortfolios(@RequestParam("userId")Integer userId){
         logger.info("Fetching Portfolios for userId : "+userId);
         return repo.findPortfolioByUserId(userId);
     }
 
+    /*Portfolio object*/
     @RequestMapping(value = "/api/portfolio", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, method = RequestMethod.POST)
-    public @ResponseBody Portfolio addSecurity(@RequestBody Portfolio portfolio)
+    public @ResponseBody Portfolio addPortfolio(@RequestBody Portfolio portfolio)
     {
         logger.info("Adding Portfolio : "+portfolio.getName()+", Symbol : "+portfolio.getUserId());
         repo.saveAndFlush(portfolio);
         logger.info("Added Portfolio id : "+portfolio.getId()+", Name : "+portfolio.getName()+", Symbol : "+portfolio.getUserId());
         return portfolio;
     }
+
+    /*Portfolio security*/
+    @RequestMapping(value="/api/portfolio_security", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+    public @ResponseBody Portfolio getPortfoliosSecurity(@RequestParam("portfolioId")Integer id){
+        logger.info("Fetching securities for portfolioId : "+id);
+        return repo.findById(new Long(id.longValue())).get();
+    }
+
+
 }
