@@ -82,4 +82,14 @@ public class PortfolioSecurity {
     public void setPortfolio(Portfolio portfolio) {
         this.portfolio = portfolio;
     }
+
+    public long getPortfolioId()
+    {
+        return portfolio.getId();
+    }
+
+    public String getPortfolioName()
+    {
+        return portfolio.getName();
+    }
 }

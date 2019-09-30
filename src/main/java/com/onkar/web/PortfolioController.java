@@ -2,7 +2,9 @@ package com.onkar.web;
 
 
 import com.onkar.domain.Portfolio;
+import com.onkar.domain.PortfolioSecurity;
 import com.onkar.repository.PortfolioRepository;
+import com.onkar.repository.PortfolioSecurityRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class PortfolioController {
 
     @Autowired
     PortfolioRepository repo;
+
+    @Autowired
+    PortfolioSecurityRepository repoPS;
 
 
     /*Portfolio list*/
@@ -47,4 +52,10 @@ public class PortfolioController {
     }
 
 
+    @RequestMapping(value="/api/ps", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+    public @ResponseBody List<PortfolioSecurity> getPS(@RequestParam("userId")Integer userId,
+                                                 @RequestParam("symbol")String symbol)
+    {
+        return repoPS.findPortfoliosWithMatchingSecurity(userId,symbol);
+    }
 }
