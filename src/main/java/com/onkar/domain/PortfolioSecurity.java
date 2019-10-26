@@ -1,6 +1,7 @@
 package com.onkar.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -24,7 +25,15 @@ public class PortfolioSecurity {
     @Column(name = "created_time", insertable=false)
     private Timestamp createdTime;
 
-    PortfolioSecurity(){}
+    @JsonInclude()
+    @Transient
+    private long portfolioId;
+
+    @JsonInclude()
+    @Transient
+    private String portfolioName;
+
+    public PortfolioSecurity(){}
 
     public Long getId() {
         return id;
@@ -83,13 +92,18 @@ public class PortfolioSecurity {
         this.portfolio = portfolio;
     }
 
-    public long getPortfolioId()
-    {
-        return portfolio.getId();
-    }
+    public long getPortfolioId() { return portfolio!=null?portfolio.getId():portfolioId; }
 
     public String getPortfolioName()
     {
-        return portfolio.getName();
+        return portfolio!=null?portfolio.getName():portfolioName;
+    }
+
+    public void setPortfolioId(long portfolioId) {
+        this.portfolioId = portfolioId;
+    }
+
+    public void setPortfolioName(String portfolioName) {
+        this.portfolioName = portfolioName;
     }
 }
