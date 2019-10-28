@@ -17,16 +17,13 @@ public class PortfolioSecurity {
     private Float costPerUnit;
     private Date datePurchased;
 
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "portfolio_id")
-    private Portfolio portfolio;
-
     @Column(name = "created_time", insertable=false)
     private Timestamp createdTime;
 
     @JsonInclude()
     @Transient
+    private String sector;
+
     private long portfolioId;
 
     @JsonInclude()
@@ -84,19 +81,11 @@ public class PortfolioSecurity {
         this.datePurchased = datePurchased;
     }
 
-    public Portfolio getPortfolio() {
-        return portfolio;
-    }
-
-    public void setPortfolio(Portfolio portfolio) {
-        this.portfolio = portfolio;
-    }
-
-    public long getPortfolioId() { return portfolio!=null?portfolio.getId():portfolioId; }
+    public long getPortfolioId() { return portfolioId; }
 
     public String getPortfolioName()
     {
-        return portfolio!=null?portfolio.getName():portfolioName;
+        return portfolioName;
     }
 
     public void setPortfolioId(long portfolioId) {
@@ -105,5 +94,13 @@ public class PortfolioSecurity {
 
     public void setPortfolioName(String portfolioName) {
         this.portfolioName = portfolioName;
+    }
+
+    public String getSector() {
+        return sector;
+    }
+
+    public void setSector(String sector) {
+        this.sector = sector;
     }
 }

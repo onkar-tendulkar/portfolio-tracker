@@ -2,6 +2,7 @@ package com.onkar.web;
 
 
 import com.onkar.dao.PortfolioSecurityDAO;
+import com.onkar.domain.Portfolio;
 import com.onkar.domain.PortfolioSecurity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +24,7 @@ public class PortfolioSecurityController {
     private PortfolioSecurityDAO psDAO;
 
     @RequestMapping(value="/api/portfolio_security", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-    public @ResponseBody List<PortfolioSecurity> getPS(@RequestParam("userId")Integer userId,
+    public @ResponseBody List<PortfolioSecurity> getPortfolioSecurities(@RequestParam("userId")Integer userId,
                                                  @RequestParam("symbol")Optional<String> symbol,
                                                        @RequestParam("portfolioId")Optional<Long> portfolioId)
     {
@@ -32,7 +33,6 @@ public class PortfolioSecurityController {
             logger.info("Fetching portfolios with security : "+symbol.get());
             return psDAO.findPortfoliosWithMatchingSecurity(userId,symbol.get());
         }
-
         if(portfolioId.isPresent())
         {
             logger.info("Fetching securities for portfolioId : "+portfolioId+", userId : "+userId);
@@ -41,4 +41,12 @@ public class PortfolioSecurityController {
         return null;
     }
 
+    @RequestMapping(value="/api/portfolio_security", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, method = RequestMethod.POST)
+    public @ResponseBody PortfolioSecurity insert(@RequestBody PortfolioSecurity portfolioSecurity)
+    {
+        logger.info("Adding Security to Portfolio : "+portfolioSecurity.getPortfolioId()+", Symbol : "+portfolioSecurity.getSymbol());
+        psDAO.addSecurityToPortfolio(portfolioSecurity);
+        logger.info("Added Security to Portfolio : "+portfolioSecurity.getPortfolioId()+", Symbol : "+portfolioSecurity.getSymbol());
+        return portfolioSecurity;
+    }
 }
